@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mikeys Blog | Blog</title>
+  
+  <link rel="stylesheet" href="/assets/css/blog.css" />
+  
+  <link rel="stylesheet" href="/assets/css/common.css" />
+  <script src="/assets/js/categories.js"></script>
+  <script>
+    const currentTheme = localStorage.getItem("theme");
+    if (currentTheme) {
+      document.documentElement.setAttribute(
+        "data-theme",
+        localStorage.getItem("theme")
+      );
+    }
+  </script>
+  
+</head>
+
+  <body>
+    <main>
+      <header>
+  <a class="site-title" href="/">Mikeys Blog</a>
+  <!-- dark/light mode -->
+  <span id="dark-mode-toggle" style="cursor: pointer">
+    <svg
+      stroke="currentColor"
+      fill="currentColor"
+      stroke-width="0"
+      viewBox="0 0 16 16"
+      height="1.2em"
+      width="1.2em"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        d="M8 1a7 7 0 1 0 0 14A7 7 0 0 0 8 1zm0 13V2a6 6 0 1 1 0 12z"
+      ></path>
+    </svg>
+  </span>
+</header>
+ <section id="bio">
+  <section id="img-wrapper">
+    <img src="https://avatars.githubusercontent.com/u/78424742?s=400&u=22f8237196c509c5d6ef4809f98ca5c7604635d6&v=4" alt="" />
+  </section>
+  <section id="bio-wrapper">
+    <div id="text-wrapper"> <p> Posts about low-level computing, game engine and emulator design. Game design pushed computing at a time where every byte mattered. This blog showcases the details of how awesome that really was. </p> <br/> <p> </P> </div>
+    <div id="social-wrapper">
+      
+      <a href="https://www.linkedin.com/in/srsmaurya" target="_blank">
+        <img src="/assets/icons/linkedin.png" alt="" />
+      </a>
+      
+      <a href="https://github.com/Mblakey" target="_blank">
+        <img src="/assets/icons/github.png" alt="" />
+      </a>
+      
+      <a href="mailto:m.k.blakey@icloud.com" target="_blank">
+        <img src="/assets/icons/email.png" alt="" />
+      </a>
+      
+    </div>
+  </section>
+</section>
+
+      <script src="/assets/js/lunr.js"></script>
+
+<script>
+
+var documents = [{
+    "id": 0,
+    "url": "http://localhost:4000/404.html",
+    "title": "404 Page not found",
+    "body": "Oops! this page dosen’t exists, head back to Homepage "
+    }, {
+    "id": 1,
+    "url": "http://localhost:4000/about/",
+    "title": "About Page",
+    "body": ""
+    }, {
+    "id": 2,
+    "url": "http://localhost:4000/",
+    "title": "Blog",
+    "body": ""
+    }, {
+    "id": 3,
+    "url": "http://localhost:4000/robots.txt",
+    "title": "",
+    "body": "      Sitemap: {{ &#8220;sitemap. xml&#8221;   absolute_url }}   "
+    }, {
+    "id": 4,
+    "url": "http://localhost:4000/posts/jekyll-markdown/",
+    "title": "Mikeys Blog 1947",
+    "body": "2022/11/04 - Text can be bold, italic, strikethrough or keyword Link to another page. There should be whitespace between paragraphs. There should be whitespace between paragraphs. We recommend including a README, or a file with information about your project. Image: Images can be clicked to enlarge :) Header 1This is a normal paragraph following a header. GitHub is a code hosting platform for version control and collaboration. It lets you and others work together on projects from anywhere. Header 2:  This is a blockquote following a header.  When something is important enough, you do it even if the odds are not in your favor. Header 3:  This is another blockquote following header 3 // Javascript code with syntax highlighting. var fun = function lang(l) { dateformat. i18n = require( . /lang/  + l); return true;};# Ruby code with syntax highlightingGitHubPages::Dependencies. gems. each do |gem, version| s. add_dependency(gem,  = #{version} )endHeader 4:  This is an unordered list following a header.  This is an unordered list following a header.  This is an unordered list following a header. Header 5 This is an ordered list following a header.  This is an ordered list following a header.  This is an ordered list following a header. Header 6      head1   head two   three         ok   good swedish fish   nice       out of stock   good and plenty   nice       ok   good oreos   hmm       ok   good zoute drop   yumm   There’s a horizontal rule below this. : Here is an unordered list::  Item foo Item bar Item baz Item zipAnd an ordered list::  Item one     Item one   Item two         Item one     Item two     Item three          Item three    Item four Item two Item three Item fourAnd a nested list::  level 1 item     level 2 item   level 2 item         level 3 item     level 3 item           level 1 item     level 2 item   level 2 item   level 2 item    level 1 item     level 2 item   level 2 item    level 1 itemLong, single-line code blocks should not wrap. They should horizontally scroll if they are too long Long, single-line code blocks should not wrap. They should horizontally scroll if they are too long. The final element. "
+    }];
+
+var idx = lunr(function () {
+    this.ref('id')
+    this.field('title')
+    this.field('body')
+
+    documents.forEach(function (doc) {
+        this.add(doc)
+    }, this)
+});
+function lunr_search(term) {
+    document.getElementById('lunrsearchresults').innerHTML = '<ul></ul>';
+    if(term) {
+        document.getElementById('lunrsearchresults').innerHTML = "<p>Search results for '" + term + "'</p>" + document.getElementById('lunrsearchresults').innerHTML;
+        //put results on the screen.
+        var results = idx.search(term);
+        if(results.length>0){
+            //console.log(idx.search(term));
+            //if results
+            for (var i = 0; i < results.length; i++) {
+                // more statements
+                var ref = results[i]['ref'];
+                var url = documents[ref]['url'];
+                var title = documents[ref]['title'];
+                var body = documents[ref]['body'].substring(0,160)+'...';
+                document.querySelectorAll('#lunrsearchresults ul')[0].innerHTML = document.querySelectorAll('#lunrsearchresults ul')[0].innerHTML + "<li class='lunrsearchresult'><a href='" + url + "'><span class='title'>" + title + "</span><br /><span class='body'>"+ body +"</span><br /><span class='url'>"+ url +"</span></a></li>";
+            }
+        } else {
+            document.querySelectorAll('#lunrsearchresults ul')[0].innerHTML = "<li class='lunrsearchresult'>No results found...</li>";
+        }
+    }
+    return false;
+}
+</script>
+<style>
+    #lunrsearchresults {padding-top: 0.2rem;}
+    .lunrsearchresult {padding-bottom: 1rem;}
+    .lunrsearchresult .title {color: #d9230f;}
+    .lunrsearchresult .url {color: silver;}
+    .lunrsearchresult a {display: block; color: #777;}
+    .lunrsearchresult a:hover, .lunrsearchresult a:focus {text-decoration: none;}
+    .lunrsearchresult a:hover .title {text-decoration: underline;}
+</style>
+
+
+<form onSubmit="return lunr_search(document.getElementById('lunrsearch').value);">
+    <p><input type="text" class="form-control" id="lunrsearch" name="q" maxlength="255" value="" placeholder="Search for post" /></p>
+</form>
+<div id="lunrsearchresults">
+    <ul></ul>
+</div>
+
+      <section class="articles">
+        
+        <article class="article">
+          <h2 class="article-title">
+            <a href="/posts/jekyll-markdown/"> Mikeys Blog 1947 </a>
+          </h2>
+          <small class="date">04 Nov 2022</small>
+          <div class="categories">
+            
+            <a href="#!" data-base-url="" class="category"
+              >jekyll</a
+            >
+            
+            <a href="#!" data-base-url="" class="category"
+              >Test Post</a
+            >
+            
+            <a href="#!" data-base-url="" class="category"
+              >first post</a
+            >
+            
+          </div>
+        </article>
+        
+      </section>
+      <footer>
+  <p>&copy; 2024 - 2024 | Mikeys Blog</p>
+</footer>
+<script src="/assets/js/mode.js" defer></script>
+
+    </main>
+    <section id="category-modal-bg"></section>
+<section id="category-modal">
+  <h1 id="category-modal-title"></h1>
+  <section id="category-modal-content"></section>
+</section>
+
+  </body>
+</html>
